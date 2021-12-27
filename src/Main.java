@@ -13,6 +13,7 @@ import Proxy.IBrowser;
 import Singleton.AClazz;
 import Singleton.BClazz;
 import Singleton.SocketClient;
+import Strategy.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -26,7 +27,7 @@ public class Main {
         // Test_04_Decorator();
         // Test_05_Observer();
         // Test_06_1_Facade();
-        Test_06_2_Facade();
+        // Test_06_2_Facade();
         Test_07_Strategy();
     }
     public static void Test_01_singleton(){
@@ -162,7 +163,29 @@ public class Main {
         sftpClient.disConnect();
     }
     public static void Test_07_Strategy(){
+        // 객체지향의 꽃ㅎㅎ
+        Encoder encoder = new Encoder();// 실제로 사용하는 원본객체를 두고
+        //전략만 수정해서 다른 결과를 도출해 낸다.
+        String message = "hello java";
 
+
+        //base64
+        EncodingStrategy base64 = new Base64Strategy();
+        //normal
+        EncodingStrategy normal = new NormalStrategy();
+
+
+        encoder.setEncodingStrategy(base64);
+        String base64result = encoder.getMessage(message);
+        System.out.println(base64result);
+
+        encoder.setEncodingStrategy(normal);
+        String normalResult = encoder.getMessage(message);
+        System.out.println(normalResult);
+
+        encoder.setEncodingStrategy(new AppendStrategy());
+        String appendResult = encoder.getMessage(message);
+        System.out.println(appendResult);
     }
 }
 
