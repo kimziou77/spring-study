@@ -1,0 +1,12 @@
+package Singleton;
+
+public class SocketClient {
+    private static SocketClient socketClient;
+    private SocketClient(){}
+    public static SocketClient getInstance(){
+        if(socketClient == null){
+            socketClient = new SocketClient();
+        }
+        return socketClient;
+    }
+}
