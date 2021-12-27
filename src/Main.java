@@ -1,3 +1,4 @@
+import AOP.AopBrowser;
 import Adapter.*;
 import Proxy.Browser;
 import Proxy.BrowserProxy;
@@ -6,12 +7,15 @@ import Singleton.AClazz;
 import Singleton.BClazz;
 import Singleton.SocketClient;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Main {
 
     public static void main(String[] args) {
         // Test_01_singleton();
         // Test_02_Adapter();
-         Test_03_Proxy();
+        // Test_03_Proxy();
+        Test_04_AOP();
 
     }
     public static void Test_01_singleton(){
@@ -60,6 +64,28 @@ public class Main {
            전후에 있는 기능을 넣을 수 있는게 AOP이다.
 
          */
+    }
+    public static void Test_04_AOP(){
+        //AOP패턴은 Proxy패턴을 활용하고 있다.
+        //특정기능 앞뒤로 여러 흩어지고 공통된 기능들을 묶어주는 기능을 한다.
+        //시간을 체크해준다던지 트랜젝션있는곳 시스템이 어디서 오래걸리고 있는지
+        //어떤 메소드 때문에 오래걸리는지 확인하는데 많이 사용한다.
+        AtomicLong start = new AtomicLong();
+        AtomicLong end = new AtomicLong();
+        IBrowser aopBrowser = new AopBrowser("www.naver.com",
+                ()->{
+                    System.out.println("before");
+                    start.set(System.currentTimeMillis());
+                },
+                ()->{
+                    long now = System.currentTimeMillis();
+                    end.set(now - start.get());
+                });
+        aopBrowser.show(); // loading
+        System.out.println("loading time :" + end.get());
+
+        aopBrowser.show(); // cache
+        System.out.println("loading time :" + end.get());
     }
         // 콘센트
     public static void connect(Electronic110V electronic110V){
