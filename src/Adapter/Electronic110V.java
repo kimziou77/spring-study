@@ -1,2 +1,5 @@
-package Adapter;public interface Electronic110V {
+package Adapter;
+
+public interface Electronic110V {
+    void powerOn();
 }
