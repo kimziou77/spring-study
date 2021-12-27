@@ -1,6 +1,8 @@
 import AOP.AopBrowser;
 import Adapter.*;
 import Decorator.*;
+import Observer.Button;
+import Observer.IButtonListener;
 import Proxy.Browser;
 import Proxy.BrowserProxy;
 import Proxy.IBrowser;
@@ -16,8 +18,11 @@ public class Main {
         // Test_01_singleton();
         // Test_02_Adapter();
         // Test_03_Proxy();
-        // Test_04_AOP();
-        Test_05_Decorator();
+        // Test_03_2_AOP();
+        // Test_04_Decorator();
+        Test_05_Observer();
+        Test_06_Facade();
+        Test_07_Strategy();
     }
     public static void Test_01_singleton(){
         AClazz aClazz = new AClazz();
@@ -66,7 +71,7 @@ public class Main {
 
          */
     }
-    public static void Test_04_AOP(){
+    public static void Test_03_2_AOP(){
         //AOP패턴은 Proxy패턴을 활용하고 있다.
         //특정기능 앞뒤로 여러 흩어지고 공통된 기능들을 묶어주는 기능을 한다.
         //시간을 체크해준다던지 트랜젝션있는곳 시스템이 어디서 오래걸리고 있는지
@@ -92,7 +97,7 @@ public class Main {
         electronic110V.powerOn();
     }
 
-    public static void Test_05_Decorator(){
+    public static void Test_04_Decorator(){
         // 등급이 올라갈 수록 가격이 올라감.
         // 기본 뼈대를 두고 부가적인 첨가를 하며 속성을 변환시키는 것을 데코레이터 페턴이라고 한다.
         ICar audi = new Audi(1000);
@@ -108,6 +113,25 @@ public class Main {
         //a5
         ICar audi5 = new A5(audi,"A5");
         audi5.showPrice();
+
+    }
+    public static void Test_05_Observer(){
+        Button button = new Button("버튼");
+        button.addListener(new IButtonListener() {
+            @Override
+            public void clickEvent(String event) {
+                System.out.println(event);
+            }
+        });
+        button.click("메시지 전달 : click 1");
+        button.click("메시지 전달 : click 2");
+        button.click("메시지 전달 : click 3");
+        button.click("메시지 전달 : click 4");
+    }
+    public static void Test_06_Facade(){
+
+    }
+    public static void Test_07_Strategy(){
 
     }
 }
