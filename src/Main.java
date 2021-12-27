@@ -1,6 +1,10 @@
 import AOP.AopBrowser;
 import Adapter.*;
 import Decorator.*;
+import Facade.Ftp;
+import Facade.Reader;
+import Facade.SftpClient;
+import Facade.Writer;
 import Observer.Button;
 import Observer.IButtonListener;
 import Proxy.Browser;
@@ -20,8 +24,9 @@ public class Main {
         // Test_03_Proxy();
         // Test_03_2_AOP();
         // Test_04_Decorator();
-        Test_05_Observer();
-        Test_06_Facade();
+        // Test_05_Observer();
+        // Test_06_1_Facade();
+        Test_06_2_Facade();
         Test_07_Strategy();
     }
     public static void Test_01_singleton(){
@@ -128,10 +133,36 @@ public class Main {
         button.click("메시지 전달 : click 3");
         button.click("메시지 전달 : click 4");
     }
-    public static void Test_06_Facade(){
+    public static void Test_06_1_Facade(){
+        // Facade 객체가 없는 경우 이렇게 노가다 해야함.
+        Ftp ftpClient = new Ftp("www.foo.co.kr",22,"/home/etc");
+        ftpClient.connect();
+        ftpClient.moveDirectory();
 
+        Writer writer = new Writer("text.tmp");
+        writer.fileConnect();
+        writer.write();
+
+        Reader reader = new Reader("text.tmp");
+        reader.fileDisconnect();
+        reader.fileRead();
+
+        reader.fileDisconnect();
+        writer.fileDisconnect();
+        ftpClient.disConnect();
+
+    }
+    public static void Test_06_2_Facade(){
+        // ver1 내부 복잡한 부분을 새로운 인터페이스로 정면만 바라볼 수 있도록
+        // Facade객체를 통해서 각 객체에 의존되던 애들을 간략하게 사용할 수 있다.
+        SftpClient sftpClient = new SftpClient("www.foo.co.kr",22,"/home/etc", "text.tmp");
+        sftpClient.connect();
+        sftpClient.write();
+        sftpClient.read();
+        sftpClient.disConnect();
     }
     public static void Test_07_Strategy(){
 
     }
 }
+
