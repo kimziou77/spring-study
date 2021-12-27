@@ -1,5 +1,6 @@
 import AOP.AopBrowser;
 import Adapter.*;
+import Decorator.*;
 import Proxy.Browser;
 import Proxy.BrowserProxy;
 import Proxy.IBrowser;
@@ -15,8 +16,8 @@ public class Main {
         // Test_01_singleton();
         // Test_02_Adapter();
         // Test_03_Proxy();
-        Test_04_AOP();
-
+        // Test_04_AOP();
+        Test_05_Decorator();
     }
     public static void Test_01_singleton(){
         AClazz aClazz = new AClazz();
@@ -87,8 +88,26 @@ public class Main {
         aopBrowser.show(); // cache
         System.out.println("loading time :" + end.get());
     }
-        // 콘센트
     public static void connect(Electronic110V electronic110V){
         electronic110V.powerOn();
+    }
+
+    public static void Test_05_Decorator(){
+        // 등급이 올라갈 수록 가격이 올라감.
+        // 기본 뼈대를 두고 부가적인 첨가를 하며 속성을 변환시키는 것을 데코레이터 페턴이라고 한다.
+        ICar audi = new Audi(1000);
+        audi.showPrice();
+        //a3
+        ICar audi3 = new A3(audi,"A3");
+        audi3.showPrice();
+
+        //a4
+        ICar audi4 = new A4(audi,"A4");
+        audi4.showPrice();
+
+        //a5
+        ICar audi5 = new A5(audi,"A5");
+        audi5.showPrice();
+
     }
 }
