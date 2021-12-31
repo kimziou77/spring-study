@@ -157,4 +157,27 @@ class UserRepositoryTest {
         System.out.println("findByNameLike : "+userRepository.findByNameLike("%art%"));
 
     }
+
+    @Test
+    void ch04_04(){
+        // pagingAndSortingTest()
+        System.out.println("findTop1ByName : "+ userRepository.findTop1ByName("martin"));
+        System.out.println("findLast1ByName : " + userRepository.findLast1ByName("martin")) ;
+
+        // 의도한것 - 역순으로 만들어서 하나 가지고 오고 싶었음
+        System.out.println("findTop1ByNameOrderByIdDesc : " + userRepository.findTopByNameOrderByIdDesc("martin"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("martin"));
+        //점점 이름이 길어지고 있음.
+        // 밑에 보면 인터페이스는 findFirstByName 이거 하나 이고 나머지는 사용자가 선택할 수 있도록 만들어줌.
+
+        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+        /* 아래와 같은 함수를 만들어서 위에 대입해 주면 좋을듯
+        private Sort getSort(){
+             return Sort.by(Order.desc("id"),
+                            Order.asc("email"),
+                            Order.asc("updatedAt"));
+         */
+
+    }
+
 }
