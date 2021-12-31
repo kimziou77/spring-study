@@ -108,4 +108,25 @@ class UserRepositoryTest {
         user.setEmail("martin-updated@fastcampuscom");
         userRepository.save(user);
     }
+    @Test
+    void selectTest(){
+        System.out.println(userRepository.findByName("martin"));
+
+        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("martin@fastcampus.com"));        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("martin@fastcampus.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("martin@fastcampus.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("martin@fastcampus.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("martin@fastcampus.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("martin@fastcampus.com"));
+        System.out.println("findSomethingByEmail : " + userRepository.findSomethingByEmail("martin@fastcampus.com"));
+
+        System.out.println("findTop2ByName : "+ userRepository.findTop2ByName("martin"));
+        System.out.println("findFirst2ByName : "+ userRepository.findFirst2ByName("martin"));
+        System.out.println("findLast1ByName : "+userRepository.findLast1ByName("martin"));
+        // 인식하지 않는 키워드는 무시하게 됨 findByName으로만 동작 (Last1 무시)
+        // 역순정렬후 find1
+
+
+    }
 }

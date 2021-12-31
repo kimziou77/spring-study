@@ -8,7 +8,7 @@ insert into USER (`id`, `name`, `email`) values (3, 'bbbb', 'bbbb@fastcampus.com
 call next value for hibernate_sequence;
 insert into USER (`id`, `name`, `email`) values (4, 'cccc', 'ddcc@fastcampus.com');
 call next value for hibernate_sequence;
-insert into USER (`id`, `name`, `email`) values (5, 'dddd', 'dddd@fastcampus.com');
+insert into USER (`id`, `name`, `email`) values (5, 'martin', 'dddd@fastcampus.com');
 
 -- call next value for hibernate_sequence;
 -- insert into user(`id`,`name`,`email`,`createdAt`,`updatedAt`) values (1, 'dennis','dennis@naver.com',now(),now());
