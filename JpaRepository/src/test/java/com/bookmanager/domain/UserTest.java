@@ -23,5 +23,6 @@ class UserTest {
                 .build();
 
         System.out.println(user);
+
     }
 }
