@@ -129,4 +129,14 @@ class UserRepositoryTest {
 
 
     }
+    @Test
+    void query() {
+        System.out.println("findByEmailAndName : "+ userRepository.findByEmailAndName("martin@fastcampus.com","martin"));
+        System.out.println("findByEmailOrName : "+userRepository.findByEmailOrName("martin@fastcampus.com", "bbbb"));
+        System.out.println("findByIdAfter : "+userRepository.findByIdAfter(4L)); // Before와 After은 날짜와 시간에 사용하면 좋음
+        System.out.println("findByIdGreaterThan :" + userRepository.findByIdGreaterThan(3L));
+        System.out.println("findByIdGreaterThanEqual :" + userRepository.findByIdGreaterThanEqual(3L));
+
+        System.out.println("findByIdBetween : "+userRepository.findByIdBetween(1L,3L));
+    }
 }
