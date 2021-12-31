@@ -108,4 +108,80 @@ class UserRepositoryTest {
         user.setEmail("martin-updated@fastcampuscom");
         userRepository.save(user);
     }
+    @Test
+    void selectTest(){
+        System.out.println(userRepository.findByName("martin"));
+
+        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("martin@fastcampus.com"));        System.out.println("findByEmail : " + userRepository.findByEmail("martin@fastcampus.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("martin@fastcampus.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("martin@fastcampus.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("martin@fastcampus.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("martin@fastcampus.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("martin@fastcampus.com"));
+        System.out.println("findSomethingByEmail : " + userRepository.findSomethingByEmail("martin@fastcampus.com"));
+
+        System.out.println("findTop2ByName : "+ userRepository.findTop2ByName("martin"));
+        System.out.println("findFirst2ByName : "+ userRepository.findFirst2ByName("martin"));
+        System.out.println("findLast1ByName : "+userRepository.findLast1ByName("martin"));
+        // 인식하지 않는 키워드는 무시하게 됨 findByName으로만 동작 (Last1 무시)
+        // 역순정렬후 find1
+
+
+    }
+    @Test
+    void query() {
+        System.out.println("findByEmailAndName : "+ userRepository.findByEmailAndName("martin@fastcampus.com","martin"));
+        System.out.println("findByEmailOrName : "+userRepository.findByEmailOrName("martin@fastcampus.com", "bbbb"));
+        System.out.println("findByIdAfter : "+userRepository.findByIdAfter(4L)); // Before와 After은 날짜와 시간에 사용하면 좋음
+        System.out.println("findByIdGreaterThan :" + userRepository.findByIdGreaterThan(3L));
+        System.out.println("findByIdGreaterThanEqual :" + userRepository.findByIdGreaterThanEqual(3L));
+
+        System.out.println("findByIdBetween : "+userRepository.findByIdBetween(1L,3L));
+
+    }
+    @Test
+    void ch04_03(){
+        System.out.println("findByIdIsNotNull : "+userRepository.findByIdIsNotNull());
+        // collection type 에 empty를 체크하는 것이라 error가 남. 문자열 empty가 아님
+        // System.out.println("findByIdIsNotEmpty : "+userRepository.findByIdIsNotEmpty());
+
+        // 확인을 위해 Address 클래스를 추가해보자
+        // System.out.println("findByAdressIsNotEmpty : "+userRepository.findByAddressIsNotEmpty());
+        System.out.println("findByNameIn : "+userRepository.findByNameIn(Lists.newArrayList("martin","bbbb")));
+
+        System.out.println("findByNameStartingWith : "+ userRepository.findByNameStartingWith("mar"));
+        System.out.println("findByNameEndingWith : "+ userRepository.findByNameEndingWith("tin"));
+        System.out.println("findByNameContainsWith : "+ userRepository.findByNameContains("art"));
+
+        System.out.println("findByNameLike : "+userRepository.findByNameLike("%art%"));
+
+    }
+
+    @Test
+    void ch04_04(){
+        // pagingAndSortingTest()
+        System.out.println("findTop1ByName : "+ userRepository.findTop1ByName("martin"));
+        System.out.println("findLast1ByName : " + userRepository.findLast1ByName("martin")) ;
+
+        // 의도한것 - 역순으로 만들어서 하나 가지고 오고 싶었음
+        System.out.println("findTop1ByNameOrderByIdDesc : " + userRepository.findTopByNameOrderByIdDesc("martin"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("martin"));
+        //점점 이름이 길어지고 있음.
+        // 밑에 보면 인터페이스는 findFirstByName 이거 하나 이고 나머지는 사용자가 선택할 수 있도록 만들어줌.
+
+        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+        /* 아래와 같은 함수를 만들어서 위에 대입해 주면 좋을듯
+        private Sort getSort(){
+             return Sort.by(Order.desc("id"),
+                            Order.asc("email"),
+                            Order.asc("updatedAt"));
+         */
+    }
+
+    @Test
+    void ch04_05(){
+        System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getContent());
+        System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
 }
