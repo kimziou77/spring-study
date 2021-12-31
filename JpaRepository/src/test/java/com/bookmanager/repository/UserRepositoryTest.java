@@ -177,7 +177,11 @@ class UserRepositoryTest {
                             Order.asc("email"),
                             Order.asc("updatedAt"));
          */
-
     }
 
+    @Test
+    void ch04_05(){
+        System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getContent());
+        System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
 }
