@@ -1,5 +1,6 @@
 package com.bookmanager.repository;
 
+import com.bookmanager.domain.Gender;
 import com.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.LocalDateTime.now;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
@@ -141,7 +143,7 @@ class UserRepositoryTest {
 
     }
     @Test
-    void ch04_03(){
+    void ch03_03(){
         System.out.println("findByIdIsNotNull : "+userRepository.findByIdIsNotNull());
         // collection type 에 empty를 체크하는 것이라 error가 남. 문자열 empty가 아님
         // System.out.println("findByIdIsNotEmpty : "+userRepository.findByIdIsNotEmpty());
@@ -159,7 +161,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void ch04_04(){
+    void ch03_04(){
         // pagingAndSortingTest()
         System.out.println("findTop1ByName : "+ userRepository.findTop1ByName("martin"));
         System.out.println("findLast1ByName : " + userRepository.findLast1ByName("martin")) ;
@@ -180,8 +182,35 @@ class UserRepositoryTest {
     }
 
     @Test
-    void ch04_05(){
+    void ch03_05(){
         System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getContent());
         System.out.println("findByNameWithPaging : "+ userRepository.findByName("martin",PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
+
+    @Test
+    void ch04(){
+        User user = new User();
+        user.setName("martin3");
+        user.setEmail("martin2@fastcampus.com");
+        user.setCreatedAt(now());
+        user.setUpdatedAt(now());
+        userRepository.save(user);
+
+        //update
+        User user2= userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrtin");
+        userRepository.save(user2);
+
+        //enum
+        User user3 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user3.setGender(Gender.MALE);
+        userRepository.save(user);
+        userRepository.findAll().forEach(System.out::println);
+        //현업에서 자주 발생하는 장애포인트가 있음 
+        // jpa에서 이넘을 어떻게 다루는지 개념이 부족함
+        // 아직은 h2로 테스트를 하고있는데 native 쿼리를 통해서 결과를 확인해보면
+        // System.out.println(userRepository.findRawRecord().get("gender"));
+        // Ordinal한 값이기 때문에... MALE, FEMALE 넣었을때 0,1이었는데 맨앞에 BABY 추가하면 값이 바뀜
+        // 그래서 ENUM을 사용할때 반드시! ENUM의 타입을 @Enumerated(VALUE = EnumType.STRING)으로 바꿔주기!
     }
 }
