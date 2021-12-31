@@ -138,5 +138,23 @@ class UserRepositoryTest {
         System.out.println("findByIdGreaterThanEqual :" + userRepository.findByIdGreaterThanEqual(3L));
 
         System.out.println("findByIdBetween : "+userRepository.findByIdBetween(1L,3L));
+
+    }
+    @Test
+    void ch04_03(){
+        System.out.println("findByIdIsNotNull : "+userRepository.findByIdIsNotNull());
+        // collection type 에 empty를 체크하는 것이라 error가 남. 문자열 empty가 아님
+        // System.out.println("findByIdIsNotEmpty : "+userRepository.findByIdIsNotEmpty());
+
+        // 확인을 위해 Address 클래스를 추가해보자
+        // System.out.println("findByAdressIsNotEmpty : "+userRepository.findByAddressIsNotEmpty());
+        System.out.println("findByNameIn : "+userRepository.findByNameIn(Lists.newArrayList("martin","bbbb")));
+
+        System.out.println("findByNameStartingWith : "+ userRepository.findByNameStartingWith("mar"));
+        System.out.println("findByNameEndingWith : "+ userRepository.findByNameEndingWith("tin"));
+        System.out.println("findByNameContainsWith : "+ userRepository.findByNameContains("art"));
+
+        System.out.println("findByNameLike : "+userRepository.findByNameLike("%art%"));
+
     }
 }

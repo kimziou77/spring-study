@@ -2,10 +2,9 @@ package com.bookmanager.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +26,8 @@ public class User{
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     // 객체지향의 기본적인 캡슐화 원칙을 지키기 위해서 getter와 setter를 만들어 주어야 한다.
+
+//    @OneToMany(fetch = FetchType.EAGER)
+//    private List<Address> address;
+
 }
