@@ -2,6 +2,7 @@ package com.bookmanager.repository;
 
 import com.bookmanager.domain.Gender;
 import com.bookmanager.domain.User;
+import jdk.vm.ci.meta.Local;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,8 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     void crud(){ //create, read, update, delete
@@ -213,4 +218,55 @@ class UserRepositoryTest {
         // Ordinal한 값이기 때문에... MALE, FEMALE 넣었을때 0,1이었는데 맨앞에 BABY 추가하면 값이 바뀜
         // 그래서 ENUM을 사용할때 반드시! ENUM의 타입을 @Enumerated(VALUE = EnumType.STRING)으로 바꿔주기!
     }
+    @Test
+    void ch05_1(){
+        User user = new User();
+        user.setEmail("marasd@naver.com");
+        user.setName("martin");
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrtin");
+        userRepository.save(user2);
+        userRepository.deleteById(4L);
+
+        User user3 =  new User();
+        user3.setEmail("martin2@fastcampus@naver.com");
+        user3.setName("martin");
+//        user3.setCreatedAt(LocalDateTime.now()); // 설정을 안하면 데이터에 정합성에도 문제가 생기게 됨
+//        user3.setUpdatedAt(LocalDateTime.now()); // 실제 언제 생기고 수정했는지 알수 없음 -> prePersist함수에 작성
+        // prePersist를 사용하게 되면 매번 정확한 값이 들어가며, 개발자들이 넣는걸 까먹는것도 방지할 수 있다.
+
+        userRepository.save(user3);
+        System.out.println(userRepository.findByEmailAndName("martin2@fastcampus@naver.com","martin"));
+
+        User user4 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        System.out.println("as-is : "+ user);
+        user4.setName("martin4");
+        userRepository.save(user4);
+        System.out.println("to-be : "+userRepository.findAll().get(0));
+    }
+
+    @Test
+    public void  ch05_2(){
+        User user = new User();
+        user.setEmail("martin-new@fastcampus.com");
+        user.setName("martin-new");
+        userRepository.save(user);
+
+        user.setName("martin-new-new");
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+
+        /*
+        Entity 생애주기 안에서 발생하는 이벤트에 따라서 추가적으로 발생할수있는 entity listener
+        객체 내부에서 선언
+        별도의 클래스에서 만드는것
+        jpa에서 제공하는 listener까지 배웠다.
+        */
+
+
+    }
+
 }
