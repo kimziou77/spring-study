@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@EntityListeners(value = MyEntityListener.class)
 @EntityListeners(value = AuditingEntityListener.class)
-public class UserHistory extends BaseEntity implements Auditable {
+public class UserHistory extends BaseEntity{
     @Id
     @GeneratedValue
     private Long id;
