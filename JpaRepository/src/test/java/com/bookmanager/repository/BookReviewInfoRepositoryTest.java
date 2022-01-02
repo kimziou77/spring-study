@@ -44,7 +44,7 @@ class BookReviewInfoRepositoryTest {
         Book book = new Book();
         book.setName("수빈 만만세");
         book.setAuthorId(1L);
-        book.setPublisherId(1L);
+        // book.setPublisherId(1L);
         return bookRepository.save(book);
     }
 
