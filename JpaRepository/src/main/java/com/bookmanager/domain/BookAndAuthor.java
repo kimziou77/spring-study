@@ -7,24 +7,19 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Review extends BaseEntity{
+@Entity
+@NoArgsConstructor
+public class BookAndAuthor extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private String content;
-    private float score;
-
     @ManyToOne
-    private User user;
+    private Book book; // book에는 one To Many
     @ManyToOne
-    private Book book;
-
+    private Author author; //
 
 }

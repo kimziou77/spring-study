@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -24,8 +25,6 @@ public class Book extends BaseEntity{
     private Long authorId;
 
 
-    // 여기에 mappedBy ="book"하면 StackOverflow 에러가 남.
-    // 특별히 필요한 경우가 아니라면  relation은 단방향으로 걸거나 toString에서 제외하는게 필요하다.
     @OneToOne(mappedBy = "book")
     @ToString.Exclude
     private BookReviewinfo bookReviewinfo;
@@ -38,4 +37,14 @@ public class Book extends BaseEntity{
     @ManyToOne
     @ToString.Exclude
     private Publisher publisher;
+
+//    @ManyToMany // many to many 관계에서는 FK를 갖기가 힘들다. 그래서 중간에 맵핑해주는 중간테이블이 하나 필요하다.
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    @ToString.Exclude
+    private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
+
+    public void addBookAndAuthors(BookAndAuthor... bookAndAuthors){
+        Collections.addAll(this.bookAndAuthors, bookAndAuthors);
+    }
 }

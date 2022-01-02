@@ -34,7 +34,7 @@ public class BookRepositoryTest {
     @Test
     @Transactional
     void bookRelationTest(){
-        givenBookAndReview(); // 테스트할 정보를 저장해보자.
+        givenBookAndReview();
         User user = userRepository.findByEmail("martin@fastcampus.com");
         System.out.println("Review : "+ user.getReviews());
         System.out.println("Book : "+ user.getReviews().get(0).getBook());
