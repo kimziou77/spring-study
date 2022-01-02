@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest // mvc test를 할 수 있도록 mock mvc를만들어줌
+@WebMvcTest
 class HelloWorldControllerTest {
     
     @Autowired
@@ -20,7 +20,7 @@ class HelloWorldControllerTest {
     void helloWorldTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/api/hello-world"))
                 .andDo(print())
-                .andExpect(status().isOk()) //200응답 리턴할거임
-                .andExpect(content().string("hello-world")); //리턴되는 결과값 확인
+                .andExpect(status().isOk())
+                .andExpect(content().string("hello-world"));
     }
 }
