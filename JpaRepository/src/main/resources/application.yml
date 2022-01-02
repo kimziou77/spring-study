@@ -9,3 +9,7 @@ spring:
         ddl-auto: create
         format_sql: true
     defer-datasource-initialization: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/book_manager
+    username: root
+    password: qqqq1111

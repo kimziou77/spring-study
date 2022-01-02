@@ -18,28 +18,31 @@ class BookReviewInfoRepositoryTest {
     void crudTest(){
         BookReviewinfo bookReviewInfo = new BookReviewinfo();
 //        bookReviewInfo.setBookId(1L);
+        bookReviewInfo.setBook(givenBook());
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
         bookReviewInfoRepository.save(bookReviewInfo);
         System.out.println(">>> "+bookReviewInfoRepository.findAll());
     }
 
-    @Test
-    void crudTest2_06_02(){
-        givenBookReviewInfo();
-        Book result = bookReviewInfoRepository
-                        .findById(1L)
-                        .orElseThrow(RuntimeException::new)
-                        .getBook();
+//    @Test
+//    void crudTest2_06_02(){ //학습을 위한 테스트
+//        givenBookReviewInfo();
+//        Book result = bookReviewInfoRepository
+//                        .findById(1L)
+//                        .orElseThrow(RuntimeException::new)
+//                        .getBook();
+//
+//        System.out.println(">>> " + result);
+//
+//        BookReviewinfo result2 = bookRepository
+//                .findById(8L)
+//                .orElseThrow(RuntimeException::new)
+//                .getBookReviewinfo();
+//        System.out.println(">>> " + result2);
+//    }
 
-        System.out.println(">>> " + result);
 
-        BookReviewinfo result2 = bookRepository
-                .findById(1L)
-                .orElseThrow(RuntimeException::new)
-                .getBookReviewinfo();
-        System.out.println(">>> " + result2);
-    }
     private Book givenBook(){
         Book book = new Book();
         book.setName("수빈 만만세");
