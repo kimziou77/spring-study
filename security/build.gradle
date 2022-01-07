@@ -31,25 +31,22 @@ subprojects {
     }
 
     configurations {
-//        developmentOnly
+        developmentOnly
         runtimeClasspath {
             extendsFrom developmentOnly
         }
     }
 
     dependencies {
-        annotationProcessor('org.projectlombok:lombok:1.18.22')
-        testAnnotationProcessor('org.projectlombok:lombok:1.18.22')
-        implementation('org.projectlombok:lombok:1.18.22')
-
-//        compileOnly lombok
-//        testCompileOnly lombok
-//        annotationProcessor lombok
-//        testAnnotationProcessor lombok
-
-
-        implementation "$boot:spring-boot-starter-security" // security
+        developmentOnly("$boot:spring-boot-devtools")
+        implementation "$boot:spring-boot-starter-security"
         implementation 'com.fasterxml.jackson.core:jackson-annotations'
+
+        compileOnly lombok
+        testCompileOnly lombok
+        annotationProcessor lombok
+        testAnnotationProcessor lombok
+
         testImplementation "$boot:spring-boot-starter-test"
     }
 
