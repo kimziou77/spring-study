@@ -1,0 +1,9 @@
+
+dependencies {
+    implementation("$boot:spring-boot-starter-web")
+    implementation project(":comp-common-utils")
+//    annotationProcessor('org.projectlombok:lombok')
+//    testAnnotationProcessor('org.projectlombok:lombok')
+//    compile project(":comp-common-utils")
+}
+
